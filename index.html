@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MineSweeper</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script
+	src="https://code.jquery.com/jquery-2.2.4.min.js"
+	integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+	crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="minesweeper.css">
+</head>
+<body>
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <p id="message"></p>
+  </div>
+
+</div>
+	<table id="mine-table" class="align" onmouseup="return false;" oncontextmenu="return false;">
+		<thead>
+			<tr id="menu">
+				<th class="info" id="menu-items" colspan="8">
+					<div class="counter" id="mines">&nbsp;</div>
+					<div class="counter" id="timer">&nbsp;</div>
+					<img class="gly" id="smile" title="restart" src="images/smiling.png" alt="" onclick="restart()">
+					<img class="gly" id="cheat" title="cheat7" src="images/game-cheat.png" alt="" onclick="cheats()">
+				</th>
+			</tr>
+		</thead>
+		<tbody id="contents">
+		</tbody>
+	</table>
+<script type="text/javascript" src="minesweeper.js"></script>
+<script type="text/javascript">
+game = null;
+difficulty = "beginner";
+function newGame (level) {
+	if (game) game.clean()
+	difficulty = level
+	if (difficulty == "beginner") {
+		game = new MineSweeperGame();
+	} else if (difficulty == "medium") {
+		game = new MineSweeperGame(16, 16, 40);
+	} else {
+		game = new MineSweeperGame(16, 30, 99);
+	}
+	cheats = game.cheat.bind(game);
+	restart = game.start.bind(game);
+
+	game.start();
+}
+newGame("beginner");
+</script>
+<div class="align">
+	<button id="beginner" onclick="newGame('beginner')">Beginner</button>
+	<button id="medium" onclick="newGame('medium')">Medium</button>
+	<button id="expert" onclick="newGame('expert')">Expert</button>
+</div>
+<div class="align">Icons made by <a href="http://www.flaticon.com/authors/cursor-creative" title="Cursor Creative">Cursor Creative</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+</body>
+</html>
